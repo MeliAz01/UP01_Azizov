@@ -1,11 +1,14 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from dotenv import load_dotenv
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+psycopg://user_isp231_01:fda49e626a25@10.115.0.125:5433/UP01_user01_Azizov"
-)
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError("Переменная DATABASE_URL не задана в файле .env")
 
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
